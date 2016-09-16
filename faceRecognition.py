@@ -1,4 +1,3 @@
-#################################### 
 # IoT 2-Factor-Auth Door Lock (Facial + Voice Recognition)
 # Kevin Leung @KSLHacks (Git: KSLHacks)
 # James Earle @ItsJamesIRL (Git: JamesEarle)
