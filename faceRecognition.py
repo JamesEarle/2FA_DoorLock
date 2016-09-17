@@ -5,12 +5,15 @@
 # 9/12/2016
 
 ########### Python 2.7 #############
-import httplib, urllib, base64, json
+import httplib
+import urllib
+import base64
+import json
 
 headersDetect = {
     # Request headers
     'Content-Type': 'application/octet-stream',
-    'Ocp-Apim-Subscription-Key': '{API-Key}}',
+    'Ocp-Apim-Subscription-Key': '{API-Key}',
 }
 
 paramsDetect = urllib.urlencode({
@@ -22,7 +25,7 @@ paramsDetect = urllib.urlencode({
 headersVerify = {
     # Request headers
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': '{API-Key}}',
+    'Ocp-Apim-Subscription-Key': '{API-Key}',
 }
 
 paramsVerify = urllib.urlencode({
@@ -31,7 +34,7 @@ paramsVerify = urllib.urlencode({
 def faceVerify():
     ########### Cognitive Services Face - Detect #############
     # Read the binary from the jpg file
-    f = open("/home/pi/Documents/iotDoorLock/output.jpg", "rb")
+    f = open("{Path_of_.jpg_on_RaspberryPi}", "rb")
     try: 
         bodyDetect = f.read()
     finally:

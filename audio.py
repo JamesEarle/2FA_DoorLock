@@ -1,3 +1,10 @@
+#################################### 
+# IoT 2-Factor-Auth Door Lock (Facial + Voice Recognition)
+# Kevin Leung @KSLHacks (Git: KSLHacks)
+# James Earle @ItsJamesIRL (Git: JamesEarle)
+# 9/12/2016
+
+########### Python 2.7 #############
 import pyaudio
 import wave
 import sys
@@ -6,11 +13,11 @@ import urllib
 import base64
 
 # James - Phrase "my name is unknown to you""
-identificationProfileId = "c13cd9ee-b787-4475-983f-de04424bf39f"
-jamesVerificationId = "18000dcf-7dec-45cf-b600-9ebd50460be6"
+identificationProfileId = "{voice_profileId}"
+jamesVerificationId = "{voice_user1Id}"
 
 # Kevin - Phrase "be yourself everyone else is already taken""
-kevinVerificationId = "982c9ebe-1412-4f01-9428-f3eda464279a"
+kevinVerificationId = "{voice_user2Id}"
 
 chunk = 1024
 _format = pyaudio.paInt16
@@ -24,7 +31,7 @@ p = pyaudio.PyAudio()
 # Request headers
 headers = {
     'Content-Type': 'application/octet-stream',
-    'Ocp-Apim-Subscription-Key': '46834b44e79e4bf6b3e16eabe107978f'
+    'Ocp-Apim-Subscription-Key': '{API-Key}'
 }
 
 # Request parameters

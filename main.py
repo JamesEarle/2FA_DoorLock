@@ -1,3 +1,10 @@
+#################################### 
+# IoT 2-Factor-Auth Door Lock (Facial + Voice Recognition)
+# Kevin Leung @KSLHacks (Git: KSLHacks)
+# James Earle @ItsJamesIRL (Git: JamesEarle)
+# 9/12/2016
+
+########### Python 2.7 #############
 #!/usr/bin/python
 import send_text as st
 # Can't use this import, not supported on the Raspberry Pi without certain hardware
@@ -16,7 +23,7 @@ GPIO.setup(22, GPIO.OUT)  # face red
 GPIO.setup(17, GPIO.OUT) # voice green
 GPIO.setup(27, GPIO.OUT) # voice red
 
-# Flash all LEDs
+# Flash all LEDs - Testing purposes + Signal Hardware/Script is running
 GPIO.output(18, GPIO.LOW)
 GPIO.output(22, GPIO.LOW)
 GPIO.output(17, GPIO.LOW)
