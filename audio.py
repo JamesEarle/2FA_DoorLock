@@ -1,8 +1,3 @@
-# IoT 2-Factor-Auth Door Lock (Facial + Voice Recognition)
-# Kevin Leung @KSLHacks (Git: KSLHacks)
-# James Earle @ItsJamesIRL (Git: JamesEarle)
-# 9/12/2016
-
 import pyaudio
 import wave
 import sys
@@ -11,6 +6,7 @@ import urllib
 import base64
 
 # James - Phrase "my name is unknown to you""
+identificationProfileId = "c13cd9ee-b787-4475-983f-de04424bf39f"
 jamesVerificationId = "18000dcf-7dec-45cf-b600-9ebd50460be6"
 
 # Kevin - Phrase "be yourself everyone else is already taken""
@@ -25,13 +21,10 @@ samples = []
 
 p = pyaudio.PyAudio()
 
-# NOTE: API subscription key removed, to use this script you must 
-# provide your own in the request headers below
-
 # Request headers
 headers = {
     'Content-Type': 'application/octet-stream',
-    'Ocp-Apim-Subscription-Key': '{API-Key}'
+    'Ocp-Apim-Subscription-Key': '46834b44e79e4bf6b3e16eabe107978f'
 }
 
 # Request parameters
@@ -87,8 +80,6 @@ def voiceVerify():
     
     try:
         conn = httplib.HTTPSConnection('api.projectoxford.ai')
-        
-        # By default using Kevin's ID. Can change to use either
         conn.request("POST", "/spid/v1.0/verify?verificationProfileId="+ kevinVerificationId +"&%s" % params, body, headers)
         response = conn.getresponse()
         data = response.read()
