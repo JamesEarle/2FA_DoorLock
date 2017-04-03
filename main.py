@@ -71,26 +71,31 @@ GPIO.output(27, GPIO.LOW)
 
 old_input = GPIO.input(23)
 
+print ("WAITING FOR BUTTON PRESS")
 try:
     while True:
         new_input = GPIO.input(23)
 
         # Check for state change (button press)
         if(new_input != old_input):
-            print("BUTTON PRESS")
-            # flash both face green and red to signify picture in progress
+            print(">>> BUTTON PRESS <<<")
+
+	        # flash both face green and red to signify picture in progress
+            print("Taking Picture..")
 	        GPIO.output(18, GPIO.HIGH)
             GPIO.output(22, GPIO.HIGH)
-            time.sleep(1)
-            GPIO.output(18, GPIO.LOW)
-            GPIO.output(22, GPIO.LOW)
 
             # Take a photo using the Raspberry Pi camera
             os.system("raspistill -o output.jpg -q 40")
+
+            # turn off face green and red to process
+            print("Taking Picture - DONE")
+            GPIO.output(18, GPIO.LOW)
+            GPIO.output(22, GPIO.LOW)
             
             # Use the photo we just took and verify with API
             print("Verifying face...")
-            if(f.faceVerify()):
+	        if(f.faceVerify()):
                 print("Success - Face!")
                 # Face is a success - signify by lighting green face
                 GPIO.output(18, GPIO.HIGH)
@@ -98,12 +103,19 @@ try:
 
                 # Now test voice
                 # flash both voice green and red to signify voice in progress
+                print("Taking Voice Sample..")
                 GPIO.output(17, GPIO.HIGH)
                 GPIO.output(27, GPIO.HIGH)
-                time.sleep(1)
+	
+                # Take a voice recording using the USB Device microphone for 10seconds
+                os.system("arecord -D plughw:1 -d 5 -f S16 -r 16000 voice_record.wav")		
+
+                # Turn off voice green and red to process
+                print("Taking Voice Sample - DONE")
                 GPIO.output(17, GPIO.LOW)
                 GPIO.output(27, GPIO.LOW)
 
+                # Use voice recording and verify with API
                 if(a.voiceVerify()):
                     print("Success - Voice!")
                     GPIO.output(17, GPIO.HIGH)
@@ -132,7 +144,8 @@ finally:
         if(new_input != old_input):
             break
         else:
-
+	    continue
+	
     # Turn of LEDs
     GPIO.output(18, GPIO.LOW)
     GPIO.output(22, GPIO.LOW)
@@ -160,3 +173,4 @@ finally:
     GPIO.output(27, GPIO.LOW)
 
     print("Finished")
+    
