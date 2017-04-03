@@ -13,7 +13,7 @@ import json
 headersDetect = {
     # Request headers
     'Content-Type': 'application/octet-stream',
-    'Ocp-Apim-Subscription-Key': '{API-Key}',
+    'Ocp-Apim-Subscription-Key': '<Cognitive Service Face Key Here>',
 }
 
 paramsDetect = urllib.urlencode({
@@ -25,7 +25,7 @@ paramsDetect = urllib.urlencode({
 headersVerify = {
     # Request headers
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': '{API-Key}',
+    'Ocp-Apim-Subscription-Key': '<Cognitive Service Face Key Here>',
 }
 
 paramsVerify = urllib.urlencode({
@@ -34,7 +34,7 @@ paramsVerify = urllib.urlencode({
 def faceVerify():
     ########### Cognitive Services Face - Detect #############
     # Read the binary from the jpg file
-    f = open("{Path_of_.jpg_on_RaspberryPi}", "rb")
+    f = open("./output.jpg", "rb")
     try: 
         bodyDetect = f.read()
     finally:
@@ -56,8 +56,8 @@ def faceVerify():
 
     ########### Cognitive Services Face - Verify #############
     bodyVerify = "{\
-    \"faceId1\":\"{control faceID}\",\
-    \"faceId2\": \"" + faceDetectJson[0]["faceId"] + "\"}"
+    \"faceId1\":\"<Control faceId here - run the detect API to obtain faceId>\",\
+    \"faceId2\":\"" + faceDetectJson[0]["faceId"] + "\"}"
 
     # print(bodyVerify)
     try:
@@ -65,7 +65,7 @@ def faceVerify():
         conn.request("POST", "/face/v1.0/verify?%s" % paramsVerify, bodyVerify, headersVerify)
         response = conn.getresponse()
         data = response.read()
-        # print(data)
+        print(data)
         conn.close()
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
@@ -75,3 +75,4 @@ def faceVerify():
     isIdentical = faceVerifyJson["isIdentical"]
     # print(isIdentical)
     return isIdentical
+    

@@ -5,75 +5,34 @@
 # 9/12/2016
 
 ########### Python 2.7 #############
-import pyaudio
-import wave
+import json
 import sys
 import httplib
 import urllib
 import base64
 
 # James - Phrase "my name is unknown to you""
-identificationProfileId = "{voice_profileId}"
-jamesVerificationId = "{voice_user1Id}"
+identificationProfileId = ""
+jamesVerificationId = ""
 
 # Kevin - Phrase "be yourself everyone else is already taken""
-kevinVerificationId = "{voice_user2Id}"
-
-chunk = 1024
-_format = pyaudio.paInt16
-_channels = 1
-_rate = 16000
-
-samples = []
-
-p = pyaudio.PyAudio()
+kevinVerificationId = "<Create and enroll user. Id here>"
 
 # Request headers
 headers = {
     'Content-Type': 'application/octet-stream',
-    'Ocp-Apim-Subscription-Key': '{API-Key}'
+    'Ocp-Apim-Subscription-Key': '<Cognitive Service Voice Key Here>'
 }
 
 # Request parameters
 params = urllib.urlencode({
-    'shortAudio': 'false'
 })
-
-# Record a specified length audio stream with PyAudio
-def record(seconds):
-    stream = p.open(format=_format, channels=_channels, rate=_rate, input=True, output=True, frames_per_buffer=chunk)
-
-    print("Recording...")
-
-    for i in range(0, _rate / chunk * seconds):
-        data = stream.read(chunk)
-        samples.append(data)
-
-    print("Done!")
-
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
-
-    # Return a binary string representation of the audio
-    return b''.join(samples)
-
-# Save the audio samples to a file 
-def save(filename):
-    wf = wave.open(filename, "wb")
-    wf.setnchannels(_channels)
-    wf.setsampwidth(p.get_sample_size(_format))
-    wf.setframerate(_rate)
-    wf.writeframes(b''.join(samples))
-    wf.close()
 
 # Call the cognitive services API to verify the voice recording
 def voiceVerify():
-    byte_data = record(5)
-    save("verify.wav")
 
-    f = open("verify.wav", "rb")
-
+    f = open("voice_record.wav", "rb")
+   
     body = []
 
     try:
@@ -86,19 +45,20 @@ def voiceVerify():
         f.close()
     
     try:
-        conn = httplib.HTTPSConnection('api.projectoxford.ai')
-        conn.request("POST", "/spid/v1.0/verify?verificationProfileId="+ kevinVerificationId +"&%s" % params, body, headers)
+        conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
+        conn.request("POST", "/spid/v1.0/verify?verificationProfileId=" + kevinVerificationId + "&%s" % params, body, headers)
         response = conn.getresponse()
         data = response.read()
         print("***")    
-        print(response.length)
         print(data)
         print("***")
         
         conn.close()
-
-        if(response.length == 0): return False
-        return True
+	
+	#convert string to JSON
+	d = json.loads(data)
+        if(d['result'] == "Accept"): return True
+        return False
     except Exception as e:
         print(e)
         return False
