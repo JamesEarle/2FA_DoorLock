@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "fs": "0.0.1-security",
+    "node-cmd": "^3.0.0",
     "node-fetch": "^1.7.2"
   }
 }

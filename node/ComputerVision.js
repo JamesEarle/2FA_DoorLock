@@ -9,7 +9,7 @@ fs.readFile('./output.jpg', function (err, data) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/octet-stream',
-      'Ocp-Apim-Subscription-Key': '3d86fd2e29f3425bb21cb1af0dd1a600'
+      'Ocp-Apim-Subscription-Key': '<Cognitive Service Computer Vision Key>'
     },
     body: data
   }).then(response => {
@@ -27,7 +27,7 @@ fs.readFile('./output.jpg', function (err, data) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/octet-stream',
-      'Ocp-Apim-Subscription-Key': '3d86fd2e29f3425bb21cb1af0dd1a600'
+      'Ocp-Apim-Subscription-Key': '<Cognitive Service Computer Vision Key>'
     },
     body: data
   }).then(response => {
@@ -40,4 +40,3 @@ fs.readFile('./output.jpg', function (err, data) {
     console.log()
   }).catch(err => { console.log(err) })
 })
-

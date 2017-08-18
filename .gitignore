@@ -9,3 +9,5 @@ send_text.pyc
 
 # Ignore node modules
 node_modules
+
+.vscode
