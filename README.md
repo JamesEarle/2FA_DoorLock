@@ -38,6 +38,7 @@ There are two main parts to this project:
 
 ## Circuit Diagram ##
 Python: As shown in diagram below
+
 Node: Button is connected to GPIO pin 4 instead of GPIO pin 23 (what is shown in diagram)
 
 ![FritzingDiagram](Fritzing.png?raw=true "Fritzing Diagram")
