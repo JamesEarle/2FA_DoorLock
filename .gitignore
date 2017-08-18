@@ -1,2 +1,13 @@
 # Ignore passwords.txt
 passwords.txt
+voice_record.wav
+output.jpg
+audio.pyc
+faceRecognition.pyc
+main.pyc
+send_text.pyc
+
+# Ignore node modules
+node_modules
+
+.vscode
